@@ -33,7 +33,7 @@ class Game:
         self.purses[self.how_many_players] = 0
         self.in_penalty_box[self.how_many_players] = False
 
-        print("{} was added\n They are player number %s" % (player_name, len(self.players))
+        print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
 
         return True
 
@@ -42,8 +42,7 @@ class Game:
         return len(self.players)
 
     def roll(self, roll):
-        print("%s is the current player" % self.players[self.current_player])
-        print("They have rolled a %s" % roll)
+        print("%s is the current player \n They have rolled a %s" % (self.players[self.current_player], roll))
 
         if self.in_penalty_box[self.current_player]:
             if roll % 2 != 0:
