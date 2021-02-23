@@ -34,7 +34,7 @@ class Game:
             self.players.append(player_name)
             self.places[self.how_many_players-1] = 0
             self.purses[self.how_many_players-1] = 0
-            self.in_penalty_box[self.how_many_players] = False
+            self.in_penalty_box[self.how_many_players - 1] = False
             print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
             return True
         return False
