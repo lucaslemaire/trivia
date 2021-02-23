@@ -13,15 +13,16 @@ class Game:
         self.techno_questions = []
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
-        self.questionTechno = False
         choice = input("Do you want to replaced the rock questions by Techno ? Press Y or N : ")
         self.questionTechno = True if choice.upper() == 'Y' else False
+        self.fill_question(self.questionTechno)
 
+    def fill_question(self, question_techno):
         for i in range(50):
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
-            if not self.questionTechno:
+            if not question_techno:
                 self.rock_questions.append("Rock Question %s" % i)
             else:
                 self.techno_questions.append("Techno Question %s" % i)
