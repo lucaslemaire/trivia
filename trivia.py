@@ -33,8 +33,7 @@ class Game:
         self.purses[self.how_many_players] = 0
         self.in_penalty_box[self.how_many_players] = False
 
-        print(player_name + " was added")
-        print("They are player number %s" % len(self.players))
+        print("{} was added\n They are player number %s" % (player_name, len(self.players))
 
         return True
 
