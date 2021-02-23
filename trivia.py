@@ -38,7 +38,7 @@ class Game:
             self.places[self.how_many_players-1] = 0
             self.purses[self.how_many_players-1] = 0
             self.in_penalty_box[self.how_many_players - 1] = False
-            print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
+            print("%s was added\nThey are player number %s" % (player_name, len(self.players)))
             return True
         return False
 
@@ -159,14 +159,11 @@ if __name__ == '__main__':
     game = Game()
 
     game.add('Chet')
-    game.add('Pat')
-    game.add('Sue')
-    game.add('Chet')
-    game.add('Pat')
-    game.add('rrr')
 
     while True:
-        if not game.is_playable(): break
+        if not game.is_playable():
+            print("Il n'y a pas assez de joueurs.")
+            break
         game.roll(randrange(5) + 1)
 
         if randrange(9) == 7:
