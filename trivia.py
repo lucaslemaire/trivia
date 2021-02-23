@@ -42,8 +42,7 @@ class Game:
         return len(self.players)
 
     def roll(self, roll):
-        print("%s is the current player" % self.players[self.current_player])
-        print("They have rolled a %s" % roll)
+        print("%s is the current player %s\n %s They have rolled a %s" % (self.players[self.current_player], roll))
 
         if self.in_penalty_box[self.current_player]:
             if roll % 2 != 0:
