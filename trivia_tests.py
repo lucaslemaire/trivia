@@ -8,7 +8,7 @@ def test_number_of_players_more_than_one():
 
     game.add('P2')
 
-    assert game.is_playable == True
+    assert game.is_playable() == True
 
 
 def test_number_of_players_less_than_seven():
