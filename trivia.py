@@ -2,9 +2,11 @@
 
 class Game:
     def __init__(self):
+        self.min_players = 2
+        self.max_players = 6
         self.players = []
-        self.places = [0] * 6
-        self.purses = [0] * 6
+        self.places = [0] * self.max_players
+        self.purses = [0] * self.max_players
         self.in_penalty_box = [0] * 6
 
         self.pop_questions = []
@@ -25,17 +27,17 @@ class Game:
         return "Rock Question %s" % index
 
     def is_playable(self):
-        return self.how_many_players >= 2
+        return self.min_players <= self.how_many_players <= self.max_players
 
     def add(self, player_name):
-        self.players.append(player_name)
-        self.places[self.how_many_players] = 0
-        self.purses[self.how_many_players] = 0
-        self.in_penalty_box[self.how_many_players] = False
-
-        print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
-
-        return True
+        if self.how_many_players < self.max_players:
+            self.players.append(player_name)
+            self.places[self.how_many_players-1] = 0
+            self.purses[self.how_many_players-1] = 0
+            self.in_penalty_box[self.how_many_players - 1] = False
+            print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
+            return True
+        return False
 
     @property
     def how_many_players(self):
@@ -151,8 +153,12 @@ if __name__ == '__main__':
     game.add('Chet')
     game.add('Pat')
     game.add('Sue')
+    game.add('Chet')
+    game.add('Pat')
+    game.add('rrr')
 
     while True:
+        if not game.is_playable(): break
         game.roll(randrange(5) + 1)
 
         if randrange(9) == 7:
