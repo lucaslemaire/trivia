@@ -25,7 +25,7 @@ class Game:
         return "Rock Question %s" % index
 
     def is_playable(self):
-        return self.how_many_players >= 2
+        return 2 <= self.how_many_players <= 6
 
     def add(self, player_name):
         self.players.append(player_name)
@@ -34,7 +34,6 @@ class Game:
         self.in_penalty_box[self.how_many_players] = False
 
         print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
-
         return True
 
     @property
