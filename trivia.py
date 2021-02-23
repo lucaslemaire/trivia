@@ -30,7 +30,7 @@ class Game:
         return self.min_players <= self.how_many_players <= self.max_players
 
     def add(self, player_name):
-        if self.how_many_players < self.max_players-1:
+        if self.how_many_players < self.max_players:
             self.players.append(player_name)
             self.places[self.how_many_players-1] = 0
             self.purses[self.how_many_players-1] = 0
