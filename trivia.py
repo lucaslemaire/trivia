@@ -37,7 +37,7 @@ class Game:
             self.in_penalty_box[self.how_many_players] = False
             print("%scl was added\n They are player number %s" % (player_name, len(self.players)))
             return True
-        print('CANTc')
+        return False
 
     @property
     def how_many_players(self):
@@ -156,7 +156,6 @@ if __name__ == '__main__':
     game.add('Chet')
     game.add('Pat')
     game.add('rrr')
-    game.add('Chet')
 
     while True:
         if not game.is_playable(): break
