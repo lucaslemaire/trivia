@@ -4,6 +4,7 @@ class Game:
     def __init__(self):
         self.min_players = 2
         self.max_players = 6
+        self.too_much_players = False
         self.players = []
         self.places = [0] * self.max_players
         self.purses = [0] * self.max_players
@@ -40,6 +41,7 @@ class Game:
             self.in_penalty_box[self.how_many_players - 1] = False
             print("%s was added\nThey are player number %s" % (player_name, len(self.players)))
             return True
+        self.too_much_players = True
         return False
 
     @property
@@ -159,16 +161,23 @@ if __name__ == '__main__':
     game = Game()
 
     game.add('Chet')
+    game.add('Chet')
+    game.add('Chet')
+    game.add('Chet')
+    game.add('Chet')
+    game.add('Chet')
+    game.add('Chet')c
+    if not game.too_much_players:
+        while True:
+            if not game.is_playable():
+                print("Il n'y a pas assez de joueurs.")
+                break
+            game.roll(randrange(5) + 1)
 
-    while True:
-        if not game.is_playable():
-            print("Il n'y a pas assez de joueurs.")
-            break
-        game.roll(randrange(5) + 1)
+            if randrange(9) == 7:
+                not_a_winner = game.wrong_answer()
+            else:
+                not_a_winner = game.was_correctly_answered()
 
-        if randrange(9) == 7:
-            not_a_winner = game.wrong_answer()
-        else:
-            not_a_winner = game.was_correctly_answered()
-
-        if not not_a_winner: break
+            if not not_a_winner: break
+    print("Il y a trop de joueurs ! Impossible de lancer la partie")
