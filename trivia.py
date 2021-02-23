@@ -166,7 +166,7 @@ if __name__ == '__main__':
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
-    game.add('Chet')c
+    game.add('Chet')
     if not game.too_much_players:
         while True:
             if not game.is_playable():
