@@ -8,23 +8,26 @@ class Game:
         self.places = [0] * self.max_players
         self.purses = [0] * self.max_players
         self.in_penalty_box = [0] * 6
-
         self.pop_questions = []
         self.science_questions = []
         self.sports_questions = []
         self.rock_questions = []
-
+        self.techno_questions = []
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
+        choice = input("Do you want to replaced the rock questions by Techno ? Press Y or N : ")
+        self.questionTechno = True if choice.upper() == 'Y' else False
+        self.fill_question(self.questionTechno)
 
+    def fill_question(self, question_techno):
         for i in range(50):
             self.pop_questions.append("Pop Question %s" % i)
             self.science_questions.append("Science Question %s" % i)
             self.sports_questions.append("Sports Question %s" % i)
-            self.rock_questions.append(self.create_rock_question(i))
-
-    def create_rock_question(self, index):
-        return "Rock Question %s" % index
+            if not question_techno:
+                self.rock_questions.append("Rock Question %s" % i)
+            else:
+                self.techno_questions.append("Techno Question %s" % i)
 
     def is_playable(self):
         return self.min_players <= self.how_many_players <= self.max_players
@@ -79,6 +82,8 @@ class Game:
         if self._current_category == 'Science': print(self.science_questions.pop(0))
         if self._current_category == 'Sports': print(self.sports_questions.pop(0))
         if self._current_category == 'Rock': print(self.rock_questions.pop(0))
+        if self._current_category == 'Techno': print(self.techno_questions.pop(0))
+
 
     @property
     def _current_category(self):
@@ -91,7 +96,10 @@ class Game:
         if self.places[self.current_player] == 2: return 'Sports'
         if self.places[self.current_player] == 6: return 'Sports'
         if self.places[self.current_player] == 10: return 'Sports'
-        return 'Rock'
+        if not self.questionTechno:
+            return 'Rock'
+        else:
+            return 'Techno'
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
