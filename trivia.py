@@ -159,11 +159,6 @@ if __name__ == '__main__':
     game = Game()
 
     game.add('Chet')
-    game.add('Pat')
-    game.add('Sue')
-    game.add('Chet')
-    game.add('Pat')
-    game.add('rrr')
 
     while True:
         if not game.is_playable(): break
