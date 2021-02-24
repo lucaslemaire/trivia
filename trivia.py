@@ -89,19 +89,13 @@ class Game:
 
     @property
     def _current_category(self):
-        if self.places[self.current_player] == 0: return 'Pop'
-        if self.places[self.current_player] == 4: return 'Pop'
-        if self.places[self.current_player] == 8: return 'Pop'
-        if self.places[self.current_player] == 1: return 'Science'
-        if self.places[self.current_player] == 5: return 'Science'
-        if self.places[self.current_player] == 9: return 'Science'
-        if self.places[self.current_player] == 2: return 'Sports'
-        if self.places[self.current_player] == 6: return 'Sports'
-        if self.places[self.current_player] == 10: return 'Sports'
-        if not self.questionTechno:
-            return 'Rock'
-        else:
+        place = self.places[self.current_player]
+        if place % 4 == 0 and place <= 8: return 'Pop'
+        if place % 4 == 1 and place <= 9: return 'Science'
+        if place % 4 == 2 and place <= 10: return 'Sports'
+        if self.questionTechno:
             return 'Techno'
+        return 'Rock'
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
@@ -166,7 +160,7 @@ if __name__ == '__main__':
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
-    game.add('Chet')
+    
     if not game.too_much_players:
         while True:
             if not game.is_playable():
