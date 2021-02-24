@@ -148,15 +148,19 @@ class Game:
 
     def get_random_category(self):
         random_category = randrange(3)
-        if random_category == 0: return 'Pop'
-        if random_category == 1: return 'Science'
-        if random_category == 2: return 'Sports'
-        if random_category == 3:
+        choosen = ''
+        if random_category == 0: 
+            choosen = 'Pop'
+        elif random_category == 1:
+            choosen = 'Science'
+        elif random_category == 2:
+            choosen = 'Sports'
+        elif random_category == 3:
             if not self.questionTechno:
-                return 'Rock'
+                choosen = 'Rock'
             else:
-                return ''
-        else: return 'Techno'
+                choosen = 'Techno'
+        print("Choix de l'utilisateur : %s" % choosen)
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
