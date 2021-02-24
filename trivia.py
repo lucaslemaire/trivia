@@ -177,7 +177,8 @@ class Game:
 
     def _did_player_win(self):
         player_won = self.purses[self.current_player] >= self.number_of_gold_to_win
-        self.leaderboard.append(self.players[self.current_player])
+        if player_won:
+            self.leaderboard.append(self.players[self.current_player])
         return not player_won
 
     @property
