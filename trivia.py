@@ -110,12 +110,9 @@ class Game:
                 print('Answer was correct!!!!')
                 if not is_joker:
                     self.purses[self.current_player] += 1
-                    print(self.players[self.current_player] + \
-                        ' now has ' + \
-                        str(self.purses[self.current_player]) + \
-                        ' Gold Coins.')
+                    print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
                 else:
-                    print(self.players[self.current_player] + " did not earned gold.")
+                    print("%s did not earned gold." % self.players[self.current_player])
                 winner = self._did_player_win()
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
@@ -125,20 +122,13 @@ class Game:
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
                 return True
-
-
-
         else:
-
             print("Answer was corrent!!!!")
             if not is_joker:
                 self.purses[self.current_player] += 1
-                print(self.players[self.current_player] + \
-                    ' now has ' + \
-                    str(self.purses[self.current_player]) + \
-                    ' Gold Coins.')
+                print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
             else:
-                print(self.players[self.current_player] + " did not earned gold.")
+                print("%s did not earned gold." % self.players[self.current_player])
             winner = self._did_player_win()
             self.current_player += 1
             if self.current_player == len(self.players): self.current_player = 0
