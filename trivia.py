@@ -65,7 +65,6 @@ class Game:
 
     def roll(self, roll):
         print("%s is the current player \n They have rolled a %s" % (self.players[self.current_player], roll))
-
         if self.in_penalty_box[self.current_player]:
             if roll % 2 != 0:
                 self.is_getting_out_of_penalty_box = True
