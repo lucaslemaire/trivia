@@ -103,13 +103,13 @@ class Game:
 
     @property
     def _current_category(self):
-        place = self.places[self.current_player]
+        category = randrange(3)
         if self.choosen_category: 
             self.choosen_category = False
             return self.choosen_category
-        if place % 4 == 0 and place <= 8: return 'Pop'
-        if place % 4 == 1 and place <= 9: return 'Science'
-        if place % 4 == 2 and place <= 10: return 'Sports'
+        if category == 0: return 'Pop'
+        if category == 1: return 'Science'
+        if category == 2: return 'Sports'
         if self.questionTechno:
             return 'Techno'
         return 'Rock'
