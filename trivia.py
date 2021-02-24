@@ -6,9 +6,10 @@ class Game:
         self.max_players = 6
         self.too_much_players = False
         self.players = []
+        self.players_used_joker = []
         self.places = [0] * self.max_players
         self.purses = [0] * self.max_players
-        self.in_penalty_box = [0] * 6
+        self.in_penalty_box = [0] * self.max_players
         self.pop_questions = []
         self.science_questions = []
         self.sports_questions = []
@@ -73,9 +74,7 @@ class Game:
             if self.places[self.current_player] > 11:
                 self.places[self.current_player] = self.places[self.current_player] - 12
 
-            print(self.players[self.current_player] + \
-                        '\'s new location is ' + \
-                        str(self.places[self.current_player]))
+            print("%s's new location is %s" % (self.players[self.current_player], self.places[self.current_player]))
             print("The category is %s" % self._current_category)
             self._ask_question()
 
@@ -89,19 +88,13 @@ class Game:
 
     @property
     def _current_category(self):
-        if self.places[self.current_player] == 0: return 'Pop'
-        if self.places[self.current_player] == 4: return 'Pop'
-        if self.places[self.current_player] == 8: return 'Pop'
-        if self.places[self.current_player] == 1: return 'Science'
-        if self.places[self.current_player] == 5: return 'Science'
-        if self.places[self.current_player] == 9: return 'Science'
-        if self.places[self.current_player] == 2: return 'Sports'
-        if self.places[self.current_player] == 6: return 'Sports'
-        if self.places[self.current_player] == 10: return 'Sports'
-        if not self.questionTechno:
-            return 'Rock'
-        else:
+        place = self.places[self.current_player]
+        if place % 4 == 0 and place <= 8: return 'Pop'
+        if place % 4 == 1 and place <= 9: return 'Science'
+        if place % 4 == 2 and place <= 10: return 'Sports'
+        if self.questionTechno:
             return 'Techno'
+        return 'Rock'
 
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
@@ -154,6 +147,21 @@ class Game:
     def _did_player_win(self):
         return not (self.purses[self.current_player] == 6)
 
+    def use_joker(self):
+        player = self.players[self.current_player]
+        if player not in self.players_used_joker:
+            self.players_used_joker.append(player)
+            print('%s USE Joker !' % player)
+        self.was_correctly_answered()
+
+    def leave_game(self):
+        player = self.players[self.current_player]
+        if player in self.players:
+            self.players.remove(player)
+            self.places.pop(self.how_many_players-1)
+            self.purses.pop(self.how_many_players-1)
+            self.in_penalty_box.pop(self.how_many_players - 1)
+            print("Le joueur %s quitte le jeu." % player)
 
 from random import randrange
 
@@ -162,23 +170,35 @@ if __name__ == '__main__':
 
     game = Game()
 
+<<<<<<< HEAD
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
+=======
+    game.add('Chet1')
+    game.add('Chet2')
+    game.add('Chet3')
+
+>>>>>>> a8a3eb47128a392315ba2f16358d1af417eddb27
     if not game.too_much_players:
         while True:
             if not game.is_playable():
-                print("Il n'y a pas assez de joueurs.")
+                print("Il n'y a pas ou plus assez de joueurs.")
                 break
             game.roll(randrange(5) + 1)
-
-            if randrange(9) == 7:
+            random = randrange(9)
+            if random == 1:
+                game.leave_game()
+            elif random == 6:
+                not_a_winner = game.use_joker()
+            elif random == 7:
                 not_a_winner = game.wrong_answer()
             else:
                 not_a_winner = game.was_correctly_answered()
 
             if not not_a_winner: break
-    print("Il y a trop de joueurs ! Impossible de lancer la partie")
+    else:
+        print("Il y a trop de joueurs ! Impossible de lancer la partie")
