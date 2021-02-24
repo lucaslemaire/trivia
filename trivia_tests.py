@@ -86,3 +86,12 @@ def test_ask_number_gold_to_win(input):
     game.add('P1')
     game.add('P2')
     assert game.ask_number_of_gold_to_win() == 7
+
+@patch('builtins.input', return_value='7')
+def test_dont_win_gold_with_joker(input, is_joker = True):
+    game = Game()
+    game.add("P1")
+    game.add("P2")
+    assert game.purses == [0, 0, 0, 0, 0, 0]
+    game.was_correctly_answered(is_joker)
+    assert game.purses == [0, 0, 0, 0, 0, 0]
