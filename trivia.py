@@ -17,6 +17,7 @@ class Game:
         self.rock_questions = []
         self.techno_questions = []
         self.current_player = 0
+        self.leaderboard = []
         self.choosen_category = False
         self.is_getting_out_of_penalty_box = False
         self.number_of_gold_to_win = self.ask_number_of_gold_to_win()
@@ -174,7 +175,13 @@ class Game:
         return True
 
     def _did_player_win(self):
-        return not (self.purses[self.current_player] >= self.number_of_gold_to_win)
+        player_won = self.purses[self.current_player] >= self.number_of_gold_to_win
+        self.leaderboard.append(self.players[self.current_player])
+        return not player_won
+
+    @property
+    def _game_over(self):
+        return len(self.leaderboard) >= 3
 
     def use_joker(self):
         is_joker = True
@@ -195,6 +202,12 @@ class Game:
             if self.current_player >= len(self.players): self.current_player = 0
             print("Le joueur %s quitte le jeu." % player)
             return True
+    
+    def print_leaderboard(self):
+        return_string = '---- leaderboard ----'
+        for index in range(len(self.leaderboard)):
+            return_string += '\n%s. %s' % (index+1, self.leaderboard[index])
+        print(return_string)
 
 from random import randrange
 
@@ -217,9 +230,7 @@ if __name__ == '__main__':
                 break
             game.roll(randrange(5) + 1)
             random = randrange(9)
-            if random == 1:
-                not_a_winner = game.leave_game()
-            elif random == 6:
+            if random == 6:
                 not_a_winner = game.use_joker()
             elif random == 7:
                 not_a_winner = game.wrong_answer()
@@ -227,6 +238,9 @@ if __name__ == '__main__':
                 is_joker = False
                 not_a_winner = game.was_correctly_answered(is_joker)
 
-            if not game.players or not not_a_winner: break
+            if not game.players: break
+            if game._game_over:
+                game.print_leaderboard()
+                break
     else:
         print("Il y a trop de joueurs ! Impossible de lancer la partie")
