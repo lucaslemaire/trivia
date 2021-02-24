@@ -1,17 +1,16 @@
 from trivia import Game
+from unittest.mock import patch
 
-def test_number_of_players_more_than_one():
+
+def test_number_of_players_more_than_one(input):
     game = Game()
     game.add('P1')
-    
     assert game.is_playable() == False
-
-    game.add('P2')   
-    
+    game.add('P2')
     assert game.is_playable() == True
 
-
-def test_number_of_players_less_than_seven():
+@patch('builtins.input', return_value='y')
+def test_number_of_players_less_than_seven(input):
     game = Game()
     game.add('P1')
     game.add('P2')
@@ -27,7 +26,7 @@ def add_player():
     game.current_player == 1
     game.add('P2')
     game.current_player == 2
-    
+
 def leave_game():
     game = Game()
     game.add('P1')

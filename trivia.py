@@ -17,6 +17,7 @@ class Game:
         self.rock_questions = []
         self.techno_questions = []
         self.current_player = 0
+        self.choosen_category = False
         self.is_getting_out_of_penalty_box = False
         self.number_of_gold_to_win = self.ask_number_of_gold_to_win()
         choice = input("Do you want to replaced the rock questions by Techno ? Press Y or N : ")
@@ -44,7 +45,7 @@ class Game:
         return self.min_players <= self.how_many_players <= self.max_players
 
     def add_to_earn_coin(self, player_name):
-        self.earn_coin[player_name] = -1
+        self.earn_coin[player_name] = 0
 
     def add(self, player_name):
         if self.how_many_players < self.max_players:
@@ -77,7 +78,8 @@ class Game:
                 print(self.players[self.current_player] + \
                             '\'s new location is ' + \
                             str(self.places[self.current_player]))
-                print("The category is %s" % self._current_category)
+                print_categ = self._current_category if self._current_category else self.choosen_category
+                print("The category is %s" % print_categ)
                 self._ask_question()
             else:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
@@ -88,7 +90,8 @@ class Game:
                 self.places[self.current_player] = self.places[self.current_player] - 12
 
             print("%s's new location is %s" % (self.players[self.current_player], self.places[self.current_player]))
-            print("The category is %s" % self._current_category)
+            print_categ = self._current_category if self._current_category else self.choosen_category
+            print("The category is %s" % print_categ)
             self._ask_question()
 
     def _ask_question(self):
@@ -98,25 +101,27 @@ class Game:
         if self._current_category == 'Rock': print(self.rock_questions.pop(0))
         if self._current_category == 'Techno': print(self.techno_questions.pop(0))
 
-
     @property
     def _current_category(self):
-        place = self.places[self.current_player]
-        if place % 4 == 0 and place <= 8: return 'Pop'
-        if place % 4 == 1 and place <= 9: return 'Science'
-        if place % 4 == 2 and place <= 10: return 'Sports'
+        category = randrange(3)
+        if self.choosen_category: 
+            self.choosen_category = False
+            return self.choosen_category
+        if category == 0: return 'Pop'
+        if category == 1: return 'Science'
+        if category == 2: return 'Sports'
         if self.questionTechno:
             return 'Techno'
         return 'Rock'
 
     def was_correctly_answered(self, is_joker):
+        self.purses[self.current_player] += 1
         self.earn_coin[self.players[self.current_player]] += 1
-        self.purses[self.current_player] += self.earn_coin[self.players[self.current_player]]
+        self.purses[self.current_player]  = self.purses[self.current_player] + self.earn_coin[self.players[self.current_player]]
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
                 print('Answer was correct!!!!')
                 if not is_joker:
-                    self.purses[self.current_player] += 1
                     print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
                 else:
                     print("%s did not earned gold." % self.players[self.current_player])
@@ -132,7 +137,6 @@ class Game:
         else:
             print("Answer was corrent!!!!")
             if not is_joker:
-                self.purses[self.current_player] += 1
                 print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
             else:
                 print("%s did not earned gold." % self.players[self.current_player])
@@ -142,18 +146,30 @@ class Game:
 
             return winner
 
+    def get_random_category(self):
+        random_category = randrange(3)
+        if random_category == 0: return 'Pop'
+        if random_category == 1: return 'Science'
+        if random_category == 2: return 'Sports'
+        if random_category == 3:
+            if not self.questionTechno:
+                return 'Rock'
+            else:
+                return ''
+        else: return 'Techno'
+
     def wrong_answer(self):
         print('Question was incorrectly answered')
+        self.choosen_category = self.get_random_category()
         print("%s was sent to the penalty box" % self.players[self.current_player])
-        self.earn_coin[self.players[self.current_player]] = -1
+        self.earn_coin[self.players[self.current_player]] = 0
         self.in_penalty_box[self.current_player] = True
-
         self.current_player += 1
         if self.current_player == len(self.players): self.current_player = 0
         return True
 
     def _did_player_win(self):
-        return not (self.purses[self.current_player] == self.number_of_gold_to_win)
+        return not (self.purses[self.current_player] >= self.number_of_gold_to_win)
 
     def use_joker(self):
         is_joker = True
@@ -161,7 +177,6 @@ class Game:
         if player not in self.players_used_joker:
             self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
-        self.was_correctly_answered(is_joker)
         return True
 
     def leave_game(self):
