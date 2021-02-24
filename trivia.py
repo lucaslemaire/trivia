@@ -78,7 +78,8 @@ class Game:
                 print(self.players[self.current_player] + \
                             '\'s new location is ' + \
                             str(self.places[self.current_player]))
-                print("The category is %s" % self._current_category)
+                print_categ = self._current_category if self._current_category else self.choosen_category
+                print("The category is %s" % print_categ)
                 self._ask_question()
             else:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
@@ -89,7 +90,8 @@ class Game:
                 self.places[self.current_player] = self.places[self.current_player] - 12
 
             print("%s's new location is %s" % (self.players[self.current_player], self.places[self.current_player]))
-            print("The category is %s" % self._current_category)
+            print_categ = self._current_category if self._current_category else self.choosen_category
+            print("The category is %s" % print_categ)
             self._ask_question()
 
     def _ask_question(self):
