@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 class Game:
-    def __init__(self, number_of_gold_to_win):
-        self.number_of_gold_to_win = number_of_gold_to_win
+    def __init__(self):
         self.min_players = 2
         self.max_players = 6
         self.too_much_players = False
@@ -18,9 +17,17 @@ class Game:
         self.techno_questions = []
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
+        self.number_of_gold_to_win = self.ask_number_of_gold_to_win()
         choice = input("Do you want to replaced the rock questions by Techno ? Press Y or N : ")
         self.questionTechno = True if choice.upper() == 'Y' else False
         self.fill_question(self.questionTechno)
+
+    def ask_number_of_gold_to_win(self):
+        gold_to_win = int(input("Type the number of gold required to win : "))
+        if gold_to_win < 6 :
+            print("Value is too low ! Number of gold required set to 6.")
+            gold_to_win = 6
+        return gold_to_win
 
     def fill_question(self, question_techno):
         for i in range(50):
@@ -175,7 +182,7 @@ from random import randrange
 if __name__ == '__main__':
     not_a_winner = False
 
-    game = Game(7)
+    game = Game()
 
     game.add('Chet1')
     game.add('Chet2')
