@@ -161,6 +161,7 @@ class Game:
             else:
                 choosen = 'Techno'
         print("Choix de %s: %s" % (self.players[self.current_player], choosen))
+        print(choosen)
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
