@@ -106,6 +106,8 @@ class Game:
     def was_correctly_answered(self):
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
+                self.in_penalty_box[self.current_player] = False
+                print("%s est sortit de prison oe la rue" % self.players[self.current_player])
                 print('Answer was correct!!!!')
                 self.purses[self.current_player] += 1
                 print(self.players[self.current_player] + \
@@ -160,7 +162,6 @@ if __name__ == '__main__':
 
     game = Game()
 
-    game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
