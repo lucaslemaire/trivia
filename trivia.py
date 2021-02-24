@@ -6,9 +6,10 @@ class Game:
         self.max_players = 6
         self.too_much_players = False
         self.players = []
+        self.players_used_joker = []
         self.places = [0] * self.max_players
         self.purses = [0] * self.max_players
-        self.in_penalty_box = [0] * 6
+        self.in_penalty_box = [0] * self.max_players
         self.pop_questions = []
         self.science_questions = []
         self.sports_questions = []
@@ -152,6 +153,11 @@ class Game:
     def _did_player_win(self):
         return not (self.purses[self.current_player] == 6)
 
+    def use_joker(self):
+        player = self.players[self.current_player]
+        if player not in self.players_used_joker:
+            print('%s USE Joker !' % player)
+        self.was_correctly_answered()
 
 from random import randrange
 
@@ -163,18 +169,17 @@ if __name__ == '__main__':
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
-    game.add('Chet')
-    game.add('Chet')
-    game.add('Chet')
-    game.add('Chet')
+
     if not game.too_much_players:
         while True:
             if not game.is_playable():
                 print("Il n'y a pas assez de joueurs.")
                 break
             game.roll(randrange(5) + 1)
-
-            if randrange(9) == 7:
+            random = randrange(9)
+            if random == 6:
+                not_a_winner = game.use_joker()
+            elif random == 7:
                 not_a_winner = game.wrong_answer()
             else:
                 not_a_winner = game.was_correctly_answered()
