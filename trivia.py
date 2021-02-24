@@ -167,6 +167,7 @@ class Game:
             self.in_penalty_box.pop(self.how_many_players - 1)
             if self.current_player >= len(self.players): self.current_player = 0
             print("Le joueur %s quitte le jeu." % player)
+            return True
 
 from random import randrange
 
@@ -187,7 +188,7 @@ if __name__ == '__main__':
             game.roll(randrange(5) + 1)
             random = randrange(9)
             if random == 1:
-                game.leave_game()
+                not_a_winner = game.leave_game()
             elif random == 6:
                 not_a_winner = game.use_joker()
             elif random == 7:
@@ -196,6 +197,6 @@ if __name__ == '__main__':
                 is_joker = False
                 not_a_winner = game.was_correctly_answered(is_joker)
 
-            if not not_a_winner: break
+            if not game.players or not not_a_winner: break
     else:
         print("Il y a trop de joueurs ! Impossible de lancer la partie")
