@@ -95,3 +95,13 @@ def test_dont_win_gold_with_joker(input, is_joker = True):
     assert game.purses == [0, 0, 0, 0, 0, 0]
     game.was_correctly_answered(is_joker)
     assert game.purses == [0, 0, 0, 0, 0, 0]
+
+
+@patch('builtins.input', return_value='7')
+def test_leaderboard(input):
+    game = Game()
+    game.add("P1")
+    game.add("P2")
+    game._did_player_win()
+    game.print_leaderboard()
+    assert game.purses == [0,0,0,0,0,0]
