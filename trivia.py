@@ -151,6 +151,7 @@ class Game:
             self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
         self.was_correctly_answered()
+        return True
 
     def leave_game(self):
         player = self.players[self.current_player]
