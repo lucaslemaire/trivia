@@ -80,7 +80,7 @@ class Game:
                             str(self.places[self.current_player]))
                 print_categ = self._current_category if self._current_category else self.choosen_category
                 print("The category is %s" % print_categ)
-                self._ask_question()
+                print(self._ask_question())
             else:
                 print("%s is not getting out of the penalty box" % self.players[self.current_player])
                 self.is_getting_out_of_penalty_box = False
@@ -92,15 +92,15 @@ class Game:
             print("%s's new location is %s" % (self.players[self.current_player], self.places[self.current_player]))
             print_categ = self._current_category if self._current_category else self.choosen_category
             print("The category is %s" % print_categ)
-            self._ask_question()
+            print(self._ask_question())
 
     def _ask_question(self):
         print("----- New question -----")
-        if self._current_category == 'Pop': self.pop_questions.pop(0) 
-        if self._current_category == 'Science': self.science_questions.pop(0)
-        if self._current_category == 'Sports': self.sports_questions.pop(0)
-        if self._current_category == 'Rock': self.rock_questions.pop(0)
-        if self._current_category == 'Techno': self.techno_questions.pop(0)
+        if self._current_category == 'Pop': return self.pop_questions.pop(0) 
+        if self._current_category == 'Science': return self.science_questions.pop(0)
+        if self._current_category == 'Sports': return self.sports_questions.pop(0)
+        if self._current_category == 'Rock': return self.rock_questions.pop(0)
+        if self._current_category == 'Techno': return self.techno_questions.pop(0)
 
     @property
     def _current_category(self):

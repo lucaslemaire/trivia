@@ -20,3 +20,12 @@ def test_number_of_players_less_than_seven():
     game.add('P5')
     assert game.add('P6') == True
     assert game.add('P7') == False
+
+def test_statict_fair():
+    game = Game()
+    game.add('P1')
+    game.add('P2')
+    game.add('P3')
+    game.add('P4')
+    game.add('P5')
+    assert game.  
