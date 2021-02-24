@@ -159,7 +159,7 @@ class Game:
             self.places.pop(self.how_many_players-1)
             self.purses.pop(self.how_many_players-1)
             self.in_penalty_box.pop(self.how_many_players - 1)
-            print("Je quitte le jeu.")
+            print("Le joueur %s quitte le jeu." % player)
 
 from random import randrange
 
