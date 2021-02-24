@@ -6,6 +6,7 @@ class Game:
         self.max_players = 6
         self.too_much_players = False
         self.players = []
+        self.earn_coin = {}
         self.players_used_joker = []
         self.places = [0] * self.max_players
         self.purses = [0] * self.max_players
@@ -42,9 +43,13 @@ class Game:
     def is_playable(self):
         return self.min_players <= self.how_many_players <= self.max_players
 
+    def add_to_earn_coin(self, player_name):
+        self.earn_coin[player_name] = -1
+
     def add(self, player_name):
         if self.how_many_players < self.max_players:
             self.players.append(player_name)
+            self.add_to_earn_coin(player_name)
             self.places[self.how_many_players-1] = 0
             self.purses[self.how_many_players-1] = 0
             self.in_penalty_box[self.how_many_players - 1] = False
@@ -105,6 +110,8 @@ class Game:
         return 'Rock'
 
     def was_correctly_answered(self, is_joker):
+        self.earn_coin[self.players[self.current_player]] += 1
+        self.purses[self.current_player] += self.earn_coin[self.players[self.current_player]]
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
                 print('Answer was correct!!!!')
@@ -138,6 +145,7 @@ class Game:
     def wrong_answer(self):
         print('Question was incorrectly answered')
         print("%s was sent to the penalty box" % self.players[self.current_player])
+        self.earn_coin[self.players[self.current_player]] = -1
         self.in_penalty_box[self.current_player] = True
 
         self.current_player += 1
