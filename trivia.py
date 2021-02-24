@@ -177,7 +177,7 @@ class Game:
         if player not in self.players_used_joker:
             self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
-        self.was_correctly_answered(is_joker)
+            self.was_correctly_answered(is_joker)
         return True
 
     def leave_game(self):
