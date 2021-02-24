@@ -153,7 +153,7 @@ class Game:
         if random_category == 1: return 'Science'
         if random_category == 2: return 'Sports'
         if random_category == 3:
-            if not question_techno:
+            if not self.questionTechno:
                 return 'Rock'
             else:
                 return ''
