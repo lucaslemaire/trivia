@@ -170,19 +170,13 @@ if __name__ == '__main__':
 
     game = Game()
 
-<<<<<<< HEAD
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
-=======
-    game.add('Chet1')
-    game.add('Chet2')
-    game.add('Chet3')
 
->>>>>>> a8a3eb47128a392315ba2f16358d1af417eddb27
     if not game.too_much_players:
         while True:
             if not game.is_playable():
