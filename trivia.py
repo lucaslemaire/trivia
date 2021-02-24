@@ -137,7 +137,7 @@ class Game:
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
-        print(self.players[self.current_player] + " was sent to the penalty box")
+        print("%s was sent to the penalty box" % self.players[self.current_player])
         self.in_penalty_box[self.current_player] = True
 
         self.current_player += 1
