@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 class Game:
-    def __init__(self):
+    def __init__(self, number_of_gold_to_win):
+        self.number_of_gold_to_win = number_of_gold_to_win
         self.min_players = 2
         self.max_players = 6
         self.too_much_players = False
@@ -147,7 +148,7 @@ class Game:
         return True
 
     def _did_player_win(self):
-        return not (self.purses[self.current_player] == 6)
+        return not (self.purses[self.current_player] == self.number_of_gold_to_win)
 
     def use_joker(self):
         is_joker = True
@@ -174,8 +175,11 @@ from random import randrange
 if __name__ == '__main__':
     not_a_winner = False
 
-    game = Game()
+    game = Game(7)
 
+    game.add('Chet1')
+    game.add('Chet2')
+    game.add('Chet3')
     game.add('Chet1')
     game.add('Chet2')
     game.add('Chet3')
