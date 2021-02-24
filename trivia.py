@@ -45,7 +45,7 @@ class Game:
         return self.min_players <= self.how_many_players <= self.max_players
 
     def add_to_earn_coin(self, player_name):
-        self.earn_coin[player_name] = -1
+        self.earn_coin[player_name] = 0
 
     def add(self, player_name):
         if self.how_many_players < self.max_players:
@@ -115,13 +115,13 @@ class Game:
         return 'Rock'
 
     def was_correctly_answered(self, is_joker):
+        self.purses[self.current_player] += 1
         self.earn_coin[self.players[self.current_player]] += 1
-        self.purses[self.current_player] += self.earn_coin[self.players[self.current_player]]
+        self.purses[self.current_player]  = self.purses[self.current_player] + self.earn_coin[self.players[self.current_player]]
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
                 print('Answer was correct!!!!')
                 if not is_joker:
-                    self.purses[self.current_player] += 1
                     print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
                 else:
                     print("%s did not earned gold." % self.players[self.current_player])
@@ -137,7 +137,6 @@ class Game:
         else:
             print("Answer was corrent!!!!")
             if not is_joker:
-                self.purses[self.current_player] += 1
                 print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
             else:
                 print("%s did not earned gold." % self.players[self.current_player])
@@ -163,8 +162,7 @@ class Game:
         print('Question was incorrectly answered')
         self.choosen_category = self.get_random_category()
         print("%s was sent to the penalty box" % self.players[self.current_player])
-        self.earn_coin[self.players[self.current_player]] = -1
-
+        self.earn_coin[self.players[self.current_player]] = 0
         self.in_penalty_box[self.current_player] = True
         self.current_player += 1
         if self.current_player == len(self.players): self.current_player = 0
@@ -179,7 +177,6 @@ class Game:
         if player not in self.players_used_joker:
             self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
-            self.was_correctly_answered(is_joker)
         return True
 
     def leave_game(self):
