@@ -153,7 +153,7 @@ class Game:
         return True
 
     def _did_player_win(self):
-        return not (self.purses[self.current_player] == self.number_of_gold_to_win)
+        return not (self.purses[self.current_player] >= self.number_of_gold_to_win)
 
     def use_joker(self):
         is_joker = True
