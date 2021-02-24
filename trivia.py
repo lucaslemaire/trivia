@@ -96,16 +96,18 @@ class Game:
             return 'Techno'
         return 'Rock'
 
-    def was_correctly_answered(self):
+    def was_correctly_answered(self, is_joker):
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
                 print('Answer was correct!!!!')
-                self.purses[self.current_player] += 1
-                print(self.players[self.current_player] + \
-                    ' now has ' + \
-                    str(self.purses[self.current_player]) + \
-                    ' Gold Coins.')
-
+                if not is_joker:
+                    self.purses[self.current_player] += 1
+                    print(self.players[self.current_player] + \
+                        ' now has ' + \
+                        str(self.purses[self.current_player]) + \
+                        ' Gold Coins.')
+                else:
+                    print(self.players[self.current_player] + " did not earned gold.")
                 winner = self._did_player_win()
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
@@ -121,12 +123,14 @@ class Game:
         else:
 
             print("Answer was corrent!!!!")
-            self.purses[self.current_player] += 1
-            print(self.players[self.current_player] + \
-                ' now has ' + \
-                str(self.purses[self.current_player]) + \
-                ' Gold Coins.')
-
+            if not is_joker:
+                self.purses[self.current_player] += 1
+                print(self.players[self.current_player] + \
+                    ' now has ' + \
+                    str(self.purses[self.current_player]) + \
+                    ' Gold Coins.')
+            else:
+                print(self.players[self.current_player] + " did not earned gold.")
             winner = self._did_player_win()
             self.current_player += 1
             if self.current_player == len(self.players): self.current_player = 0
@@ -146,11 +150,12 @@ class Game:
         return not (self.purses[self.current_player] == 6)
 
     def use_joker(self):
+        is_joker = True
         player = self.players[self.current_player]
         if player not in self.players_used_joker:
             self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
-        self.was_correctly_answered()
+        self.was_correctly_answered(is_joker)
         return True
 
     def leave_game(self):
@@ -187,7 +192,8 @@ if __name__ == '__main__':
             elif random == 7:
                 not_a_winner = game.wrong_answer()
             else:
-                not_a_winner = game.was_correctly_answered()
+                is_joker = False
+                not_a_winner = game.was_correctly_answered(is_joker)
 
             if not not_a_winner: break
     else:
