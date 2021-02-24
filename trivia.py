@@ -18,9 +18,17 @@ class Game:
         self.techno_questions = []
         self.current_player = 0
         self.is_getting_out_of_penalty_box = False
+        self.number_of_gold_to_win = self.ask_number_of_gold_to_win()
         choice = input("Do you want to replaced the rock questions by Techno ? Press Y or N : ")
         self.questionTechno = True if choice.upper() == 'Y' else False
         self.fill_question(self.questionTechno)
+
+    def ask_number_of_gold_to_win(self):
+        gold_to_win = int(input("Type the number of gold required to win : "))
+        if gold_to_win < 6 :
+            print("Value is too low ! Number of gold required set to 6.")
+            gold_to_win = 6
+        return gold_to_win
 
     def fill_question(self, question_techno):
         for i in range(50):
@@ -109,12 +117,9 @@ class Game:
                 print('Answer was correct!!!!')
                 if not is_joker:
                     self.purses[self.current_player] += 1
-                    print(self.players[self.current_player] + \
-                        ' now has ' + \
-                        str(self.purses[self.current_player]) + \
-                        ' Gold Coins.')
+                    print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
                 else:
-                    print(self.players[self.current_player] + " did not earned gold.")
+                    print("%s did not earned gold." % self.players[self.current_player])
                 winner = self._did_player_win()
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
@@ -124,20 +129,13 @@ class Game:
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
                 return True
-
-
-
         else:
-
             print("Answer was corrent!!!!")
             if not is_joker:
                 self.purses[self.current_player] += 1
-                print(self.players[self.current_player] + \
-                    ' now has ' + \
-                    str(self.purses[self.current_player]) + \
-                    ' Gold Coins.')
+                print("%s now has %s Gold Coins." % (self.players[self.current_player], self.purses[self.current_player]))
             else:
-                print(self.players[self.current_player] + " did not earned gold.")
+                print("%s did not earned gold." % self.players[self.current_player])
             winner = self._did_player_win()
             self.current_player += 1
             if self.current_player == len(self.players): self.current_player = 0
@@ -146,7 +144,7 @@ class Game:
 
     def wrong_answer(self):
         print('Question was incorrectly answered')
-        print(self.players[self.current_player] + " was sent to the penalty box")
+        print("%s was sent to the penalty box" % self.players[self.current_player])
         self.earn_coin[self.players[self.current_player]] = -1
         self.in_penalty_box[self.current_player] = True
 
@@ -155,7 +153,7 @@ class Game:
         return True
 
     def _did_player_win(self):
-        return not (self.purses[self.current_player] == 6)
+        return not (self.purses[self.current_player] == self.number_of_gold_to_win)
 
     def use_joker(self):
         is_joker = True
@@ -184,6 +182,9 @@ if __name__ == '__main__':
 
     game = Game()
 
+    game.add('Chet1')
+    game.add('Chet2')
+    game.add('Chet3')
     game.add('Chet1')
     game.add('Chet2')
     game.add('Chet3')
