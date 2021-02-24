@@ -156,8 +156,18 @@ class Game:
     def use_joker(self):
         player = self.players[self.current_player]
         if player not in self.players_used_joker:
+            self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
         self.was_correctly_answered()
+
+    def leave_game(self):
+        player = self.players[self.current_player]
+        if player in self.players:
+            self.players.remove(player)
+            self.places.pop(self.how_many_players-1)
+            self.purses.pop(self.how_many_players-1)
+            self.in_penalty_box.pop(self.how_many_players - 1)
+            print("Je quitte le jeu.")
 
 from random import randrange
 
@@ -166,18 +176,20 @@ if __name__ == '__main__':
 
     game = Game()
 
-    game.add('Chet')
-    game.add('Chet')
-    game.add('Chet')
+    game.add('Chet1')
+    game.add('Chet2')
+    game.add('Chet3')
 
     if not game.too_much_players:
         while True:
             if not game.is_playable():
-                print("Il n'y a pas assez de joueurs.")
+                print("Il n'y a pas ou plus assez de joueurs.")
                 break
             game.roll(randrange(5) + 1)
             random = randrange(9)
-            if random == 6:
+            if random == 1:
+                game.leave_game()
+            elif random == 6:
                 not_a_winner = game.use_joker()
             elif random == 7:
                 not_a_winner = game.wrong_answer()
@@ -185,4 +197,5 @@ if __name__ == '__main__':
                 not_a_winner = game.was_correctly_answered()
 
             if not not_a_winner: break
-    print("Il y a trop de joueurs ! Impossible de lancer la partie")
+    else:
+        print("Il y a trop de joueurs ! Impossible de lancer la partie")
