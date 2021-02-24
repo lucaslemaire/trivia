@@ -74,9 +74,7 @@ class Game:
             if self.places[self.current_player] > 11:
                 self.places[self.current_player] = self.places[self.current_player] - 12
 
-            print(self.players[self.current_player] + \
-                        '\'s new location is ' + \
-                        str(self.places[self.current_player]))
+            print("%s's new location is %s" % (self.players[self.current_player], self.places[self.current_player]))
             print("The category is %s" % self._current_category)
             self._ask_question()
 
