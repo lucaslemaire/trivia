@@ -96,18 +96,20 @@ class Game:
             return 'Techno'
         return 'Rock'
 
-    def was_correctly_answered(self):
+    def was_correctly_answered(self, is_joker):
         if self.in_penalty_box[self.current_player]:
             if self.is_getting_out_of_penalty_box:
                 self.in_penalty_box[self.current_player] = False
                 print("%s est sortit de prison oe la rue" % self.players[self.current_player])
                 print('Answer was correct!!!!')
-                self.purses[self.current_player] += 1
-                print(self.players[self.current_player] + \
-                    ' now has ' + \
-                    str(self.purses[self.current_player]) + \
-                    ' Gold Coins.')
-
+                if not is_joker:
+                    self.purses[self.current_player] += 1
+                    print(self.players[self.current_player] + \
+                        ' now has ' + \
+                        str(self.purses[self.current_player]) + \
+                        ' Gold Coins.')
+                else:
+                    print(self.players[self.current_player] + " did not earned gold.")
                 winner = self._did_player_win()
                 self.current_player += 1
                 if self.current_player == len(self.players): self.current_player = 0
@@ -123,12 +125,14 @@ class Game:
         else:
 
             print("Answer was corrent!!!!")
-            self.purses[self.current_player] += 1
-            print(self.players[self.current_player] + \
-                ' now has ' + \
-                str(self.purses[self.current_player]) + \
-                ' Gold Coins.')
-
+            if not is_joker:
+                self.purses[self.current_player] += 1
+                print(self.players[self.current_player] + \
+                    ' now has ' + \
+                    str(self.purses[self.current_player]) + \
+                    ' Gold Coins.')
+            else:
+                print(self.players[self.current_player] + " did not earned gold.")
             winner = self._did_player_win()
             self.current_player += 1
             if self.current_player == len(self.players): self.current_player = 0
@@ -148,11 +152,20 @@ class Game:
         return not (self.purses[self.current_player] == 6)
 
     def use_joker(self):
+<<<<<<< HEAD
+=======
+        is_joker = True
+>>>>>>> ee35cf289639bdfe6faec2e71d53b35e104dc56d
         player = self.players[self.current_player]
         if player not in self.players_used_joker:
             self.players_used_joker.append(player)
             print('%s USE Joker !' % player)
+<<<<<<< HEAD
         self.was_correctly_answered()
+=======
+        self.was_correctly_answered(is_joker)
+        return True
+>>>>>>> ee35cf289639bdfe6faec2e71d53b35e104dc56d
 
     def leave_game(self):
         player = self.players[self.current_player]
@@ -161,7 +174,13 @@ class Game:
             self.places.pop(self.how_many_players-1)
             self.purses.pop(self.how_many_players-1)
             self.in_penalty_box.pop(self.how_many_players - 1)
+<<<<<<< HEAD
             print("Le joueur %s quitte le jeu." % player)
+=======
+            if self.current_player >= len(self.players): self.current_player = 0
+            print("Le joueur %s quitte le jeu." % player)
+            return True
+>>>>>>> ee35cf289639bdfe6faec2e71d53b35e104dc56d
 
 from random import randrange
 
@@ -170,12 +189,18 @@ if __name__ == '__main__':
 
     game = Game()
 
+<<<<<<< HEAD
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
     game.add('Chet')
+=======
+    game.add('Chet1')
+    game.add('Chet2')
+    game.add('Chet3')
+>>>>>>> ee35cf289639bdfe6faec2e71d53b35e104dc56d
 
     if not game.too_much_players:
         while True:
@@ -185,14 +210,23 @@ if __name__ == '__main__':
             game.roll(randrange(5) + 1)
             random = randrange(9)
             if random == 1:
+<<<<<<< HEAD
                 game.leave_game()
+=======
+                not_a_winner = game.leave_game()
+>>>>>>> ee35cf289639bdfe6faec2e71d53b35e104dc56d
             elif random == 6:
                 not_a_winner = game.use_joker()
             elif random == 7:
                 not_a_winner = game.wrong_answer()
             else:
-                not_a_winner = game.was_correctly_answered()
+                is_joker = False
+                not_a_winner = game.was_correctly_answered(is_joker)
 
+<<<<<<< HEAD
             if not not_a_winner: break
+=======
+            if not game.players or not not_a_winner: break
+>>>>>>> ee35cf289639bdfe6faec2e71d53b35e104dc56d
     else:
         print("Il y a trop de joueurs ! Impossible de lancer la partie")
