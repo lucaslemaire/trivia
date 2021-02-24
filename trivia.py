@@ -17,6 +17,7 @@ class Game:
         self.rock_questions = []
         self.techno_questions = []
         self.current_player = 0
+        self.choosen_category = False
         self.is_getting_out_of_penalty_box = False
         self.number_of_gold_to_win = self.ask_number_of_gold_to_win()
         choice = input("Do you want to replaced the rock questions by Techno ? Press Y or N : ")
@@ -98,10 +99,12 @@ class Game:
         if self._current_category == 'Rock': print(self.rock_questions.pop(0))
         if self._current_category == 'Techno': print(self.techno_questions.pop(0))
 
-
     @property
     def _current_category(self):
         place = self.places[self.current_player]
+        if self.choosen_category: 
+            self.choosen_category = False
+            return self.choosen_category
         if place % 4 == 0 and place <= 8: return 'Pop'
         if place % 4 == 1 and place <= 9: return 'Science'
         if place % 4 == 2 and place <= 10: return 'Sports'
@@ -142,12 +145,25 @@ class Game:
 
             return winner
 
+    def get_random_category(self):
+        random_category = randrange(3)
+        if random_category == 0: return 'Pop'
+        if random_category == 1: return 'Science'
+        if random_category == 2: return 'Sports'
+        if random_category == 3:
+            if not question_techno:
+                return 'Rock'
+            else:
+                return ''
+        else: return 'Techno'
+
     def wrong_answer(self):
         print('Question was incorrectly answered')
+        self.choosen_category = self.get_random_category()
         print("%s was sent to the penalty box" % self.players[self.current_player])
         self.earn_coin[self.players[self.current_player]] = -1
-        self.in_penalty_box[self.current_player] = True
 
+        self.in_penalty_box[self.current_player] = True
         self.current_player += 1
         if self.current_player == len(self.players): self.current_player = 0
         return True
